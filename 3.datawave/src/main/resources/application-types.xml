@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="peopleData" format="json">
+      <types:shape format="weave" example="examples/SampleFile.json"><![CDATA[%dw 2.0
+
+type peopleData = {| pepole: {| person: {| name: String |} |} |} {"example": "{\\\"pepole\\\":{\\\"person\\\":{\\\"name\\\":\\\"Dora\\\"}}}"}
+
+]]></types:shape>
+    </types:type>
+    <types:type name="fields" format="json">
+      <types:shape format="weave" example="examples/fields.json"><![CDATA[%dw 2.0
+
+type fields = {|
+  field1: String, 
+  field2: String, 
+  field3: String
+|} {"example": "{\\\"field1\\\":\\\"Mulesoft\\\",\\\"field2\\\":\\\"course\\\",\\\"field3\\\":\\\"fundamentals\\\"}"}
+
+]]></types:shape>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#bfd6b812-00ed-45f8-9f50-997fcd51e86b">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="peopleData"/>
+          <types:attributes type="peopleData"/>
+        </types:message>
+      </types:input-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#122a07e7-3b59-4e0a-bb9b-0011ff85b034">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="fields"/>
+        </types:message>
+      </types:input-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>
